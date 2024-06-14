@@ -17,14 +17,6 @@ export const getMatchesfootballFinished = async () => {
   return matchData.json();
 };
 
-export const getNewsInfo = async () => {
-  const newsData = await fetch(
-    `https://newsapi.org/v2/everything?apiKey=${process.env.API_TOKEN_NEWS}&q=soccer&pageSize=5`,
-    { next: { revalidate: 20 } }
-  );
-  return newsData.json();
-};
-
 export const filterLeague = async (filterData: string) => {
   const allMatches = await getMatchesfootball();
   const matches: matchesType[] = allMatches?.matches;
