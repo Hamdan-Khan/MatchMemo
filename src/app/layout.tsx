@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import News from "@/components/News";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +25,6 @@ export default function RootLayout({
           <section className="flex space-x-4">
             <Sidebar />
             {children}
-            {/* <News /> */}
           </section>
         </main>
       </body>

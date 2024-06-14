@@ -1,4 +1,3 @@
-import { filterLeague } from "@/app/api";
 import LeagueTable from "@/components/LeagueTable";
 
 const Brasileiro = async ({ params }: { params: { slug: string } }) => {

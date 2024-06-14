@@ -1,4 +1,7 @@
-import { getMatchesfootball, getMatchesfootballFinished } from "@/app/api";
+import {
+  getMatchesfootball,
+  getMatchesfootballFinished,
+} from "@/utils/footballApi";
 import Status from "@/components/Status";
 
 export default async function Home() {
