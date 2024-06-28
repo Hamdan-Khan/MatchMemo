@@ -29,9 +29,6 @@ dependencies:
   react-dom:
     specifier: 18.3.1
     version: 18.3.1(react@18.3.1)
-  save-dev:
-    specifier: 0.0.1-security
-    version: 0.0.1-security
   tailwindcss:
     specifier: 3.4.4
     version: 3.4.4
@@ -2588,10 +2585,6 @@ packages:
       es-errors: 1.3.0
       is-regex: 1.1.4
     dev: true
-
-  /save-dev@0.0.1-security:
-    resolution: {integrity: sha512-k6knZTDNK8PKKbIqnvxiOveJinuw2LcQjqDoaorZWP9M5AR2EPsnpDeSbeoZZ0pHr5ze1uoaKdK8NBGQrJ34Uw==}
-    dev: false
 
   /scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
