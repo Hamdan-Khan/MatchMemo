@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Navbar: FC = () => {
   return (
-    <div className="flex justify-between items-center py-2">
+    <div className="flex justify-between items-center py-3 pb-6">
       <Link href="/" className="flex items-center space-x-2">
         <div className="relative w-[30px] h-[30px]">
           <Image
