@@ -20,11 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="px-2 md:px-16 md:py-2 text-textPrimary">
+        <main className="flex flex-col px-2 md:px-16 md:py-2 md:m-auto text-textPrimary">
           <Navbar />
-          <section className="flex space-x-4">
+          <section className="flex space-x-4 justify-center">
             <Sidebar />
-            {children}
+            <div className="flex-grow">{children}</div>
           </section>
         </main>
       </body>
