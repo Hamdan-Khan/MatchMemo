@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 
 import Navbar from "@/components/Navbar";
+import NextAuthSessionProvider from "@/components/NextAuthSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className="flex flex-col px-2 md:px-16 md:py-2 md:m-auto text-textPrimary">
           <Navbar />
-          <section className="flex space-x-4 justify-center">
-            {children}
-          </section>
+          <NextAuthSessionProvider>
+            <section className="flex space-x-4 justify-center">
+              {children}
+            </section>
+          </NextAuthSessionProvider>
         </main>
       </body>
     </html>

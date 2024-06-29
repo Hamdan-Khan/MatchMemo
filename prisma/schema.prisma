@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING") 
+}
+
+model Admin {
+  adminId      Int      @id @default(autoincrement())
+  adminName    String
+  adminEmail   String   @unique
+  adminPassword String
+  Blog         Blog[]
+}
+
+model Blog {
+  blogId          Int      @id @default(autoincrement())
+  blogTitle       String
+  blogDescription String
+  blogDate        DateTime
+  adminId         Int
+  admin           Admin    @relation(fields: [adminId], references: [adminId])
+}
+
+model PlayerRating {
+  ratingId     Int      @id @default(autoincrement())
+  playerId     Int
+  playerRating Int
+}
+
+model Match {
+  match_id  Int      @id @default(autoincrement())
+  clubId    Int
+  goals     Int
+  matchVenue String
+  score     String
+  penalties Int
+  freeKicks Int
+  winner    String
+  Player    Player[]
+  adminId   Int
+  clubs     Club[]
+}
+
+model Player {
+  playerId    Int      @id @default(autoincrement())
+  clubId      Int
+  firstName   String
+  lastName    String
+  nationality String
+  position    String
+  careerGoals Int
+  playerImg   String
+  Match       Match[]
+  club        Club    @relation(fields: [clubId], references: [clubId])
+}
+
+model League {
+  leagueId    Int      @id @default(autoincrement())
+  leagueName  String
+  leagueImg   String
+  leagueRanking Int
+  teamCount   Int
+  Club        Club[]
+}
+
+model Club {
+  clubId     Int      @id @default(autoincrement())
+  leagueId   Int
+  clubImg    String
+  clubName   String
+  clubCoach  String
+  clubStadium String
+  clubCountry String
+  League     League   @relation(fields: [leagueId], references: [leagueId])
+  Player     Player[]
+  Match      Match[]
+}
