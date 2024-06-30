@@ -5,6 +5,7 @@ import {
 } from "@/utils/footballApi";
 import Status from "@/components/Status";
 import Sidebar from "@/components/Sidebar";
+import BlogBar from "@/components/BlogBar";
 
 export default async function Home() {
   const todayMatchesData = await getTodayMatches();
@@ -34,6 +35,7 @@ export default async function Home() {
           matchesListYesterday={yesterdayMatches}
         />
       </section>
+      <BlogBar />
     </>
   );
 }

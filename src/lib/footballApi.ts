@@ -8,6 +8,8 @@ export const options: apiOptions = {
   },
 };
 
+export const baseURL = process.env.BASE_URL;
+
 const todayDate = new Date();
 const getDateMonth = new Date(todayDate.getTime());
 getDateMonth.setDate(todayDate.getDate() - 1);

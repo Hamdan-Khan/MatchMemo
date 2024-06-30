@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Button from "./Button";
 
 const adminUtils = [
   {
@@ -19,7 +20,7 @@ const adminUtils = [
 export const AdminSidebar: React.FC = async () => {
   const pathname = usePathname();
   return (
-    <section className="px-2 md:px-4 py-2 bg-[rgb(40,46,58)] rounded-md min-w-[300px]">
+    <section className="px-2 md:px-4 py-4 bg-[rgb(40,46,58)] rounded-md min-w-[300px]">
       <div>
         <h1 className="font-bold text-xl text-center mb-4 text-[rgb(137,160,223)]">
           Manage
@@ -38,6 +39,9 @@ export const AdminSidebar: React.FC = async () => {
               </div>
             </Link>
           ))}
+          <Link href={"/api/auth/signout"}>
+            <Button color="red">Sign out</Button>
+          </Link>
         </ul>
       </div>
     </section>
