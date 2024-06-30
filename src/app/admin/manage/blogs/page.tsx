@@ -6,11 +6,10 @@ export default function Blogs() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const baseURL = "http://localhost:3000";
   const publishBlog = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${baseURL}/api/blog/create`, {
+      const response = await axios.post(`/api/blog/create`, {
         title,
         content,
       });
