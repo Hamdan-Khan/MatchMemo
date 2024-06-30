@@ -8,7 +8,10 @@ export const options: apiOptions = {
   },
 };
 
-export const baseURL = process.env.BASE_URL;
+export const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://match-memo.vercel.app";
 
 const todayDate = new Date();
 const getDateMonth = new Date(todayDate.getTime());
