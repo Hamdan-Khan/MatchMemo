@@ -1,11 +1,11 @@
-import axios from "axios";
 import BlogCard from "./BlogCard";
 import { baseURL } from "@/lib/footballApi";
 import { Blog } from "@prisma/client";
 
 export default async function BlogBar() {
-  const blogsData = await axios.get(`${baseURL}/api/blog`);
-  const blogs: Blog[] = blogsData.data;
+  const res = await fetch(`${baseURL}/api/blog`, { method: "get" });
+
+  const blogs: Blog[] = await res.json();
   return (
     <aside className="flex flex-col bg-[rgb(40,46,58)] px-2 md:px-4 py-2 rounded-md w-[300px] h-max pb-6">
       <div>

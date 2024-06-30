@@ -1,9 +1,11 @@
+import { baseURL } from "@/lib/footballApi";
 import { Blog } from "@prisma/client";
-import axios from "axios";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  const blog = await axios.get(`/api/blog?id=${params.slug}`);
-  const blogData: Blog = blog.data;
+  const res = await fetch(`${baseURL}/api/blog?id=${params.slug}`, {
+    method: "get",
+  });
+  const blogData: Blog = await res.json();
   const unformattedDate = new Date(blogData.blogDate);
   const formattedDate = unformattedDate.toLocaleDateString("en-GB", {
     day: "2-digit",

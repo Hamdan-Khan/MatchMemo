@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { useState } from "react";
 
 export default function Blogs() {
@@ -9,11 +8,11 @@ export default function Blogs() {
   const publishBlog = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`/api/blog/create`, {
-        title,
-        content,
+      const response = await fetch(`/api/blog/create`, {
+        method: "POST",
+        body: JSON.stringify({ title, content }),
       });
-      if (response.status == 200) {
+      if (response.ok) {
         setTitle("");
         setContent("");
         alert("Blog created!");
