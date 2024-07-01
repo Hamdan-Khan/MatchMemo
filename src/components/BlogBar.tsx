@@ -4,6 +4,9 @@ import { Blog } from "@prisma/client";
 
 export default async function BlogBar() {
   const res = await fetch(`${baseURL}/api/blog`, { method: "get" });
+  if (!res.ok) {
+    return <div>Error fetching data</div>;
+  }
 
   const blogs: Blog[] = await res.json();
   return (

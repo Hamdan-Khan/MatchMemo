@@ -2,27 +2,33 @@ import { options, tomorrow, yesterday } from "@/lib/footballApi";
 import { matchesType } from "@/types";
 
 export const getTodayMatches = async () => {
-  const matchData = await fetch(
-    "https://api.football-data.org/v4/matches",
-    options
-  );
-  return matchData.json();
+  const res = await fetch("https://api.football-data.org/v4/matches", options);
+  if (!res.ok) {
+    return;
+  }
+  return res.json();
 };
 
 export const getYesterdayMatches = async () => {
-  const matchData = await fetch(
+  const res = await fetch(
     `https://api.football-data.org/v4/matches?date=${yesterday}`,
     options
   );
-  return matchData.json();
+  if (!res.ok) {
+    return;
+  }
+  return res.json();
 };
 
 export const getTomorrowMatches = async () => {
-  const matchData = await fetch(
+  const res = await fetch(
     `https://api.football-data.org/v4/matches?date=${tomorrow}`,
     options
   );
-  return matchData.json();
+  if (!res.ok) {
+    return;
+  }
+  return res.json();
 };
 
 export const filterLeague = async (filterData: string) => {

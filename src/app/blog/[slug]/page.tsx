@@ -5,6 +5,15 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const res = await fetch(`${baseURL}/api/blog?id=${params.slug}`, {
     method: "get",
   });
+  if (!res.ok) {
+    return (
+      <section className="w-auto">
+        <div className="bg-slate-900 p-6 rounded-xl max-w-[700px] m-auto">
+          <h1 className="text-3xl font-bold ">Blog not found</h1>
+        </div>
+      </section>
+    );
+  }
   const blogData: Blog = await res.json();
   const unformattedDate = new Date(blogData.blogDate);
   const formattedDate = unformattedDate.toLocaleDateString("en-GB", {
