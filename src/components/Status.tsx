@@ -26,7 +26,7 @@ const Status = ({
               : "bg-slate-500 font-regular"
           }`}
         >
-          yesterday
+          finished
         </button>
         <button
           onClick={() => setStatusMatch("TODAY")}
@@ -46,7 +46,7 @@ const Status = ({
               : "bg-slate-500 font-regular"
           }`}
         >
-          tomorrow
+          upcoming
         </button>
       </div>
 
