@@ -9,62 +9,6 @@ type LeagueProps = {
   emblem: string;
   code: string;
 };
-// const Leagues = [
-//   {
-//     id: 1,
-//     name: "Premier League",
-//     href: "/league/premier-league",
-//     emblem: "/img/leagues/premier_league.webp",
-//   },
-//   {
-//     id: 2,
-//     name: "Primera Division",
-//     href: "/league/la-liga",
-//     emblem: "/img/leagues/laliga.svg",
-//   },
-//   {
-//     id: 3,
-//     name: "Bundesliga",
-//     href: "/league/bundesliga",
-//     emblem: "/img/leagues/bundesliga.webp",
-//   },
-//   {
-//     id: 4,
-//     name: "Serie A",
-//     href: "/league/serie-a",
-//     emblem: "/img/leagues/serie_a.webp",
-//   },
-//   {
-//     id: 5,
-//     name: "Ligue 1",
-//     href: "/league/ligue-1",
-//     emblem: "/img/leagues/ligue_1.webp",
-//   },
-//   {
-//     id: 6,
-//     name: "Championship",
-//     href: "/league/championship",
-//     emblem: "/img/leagues/championship.webp",
-//   },
-//   {
-//     id: 7,
-//     name: "Primeira Liga",
-//     href: "/league/primeira-liga",
-//     emblem: "/img/leagues/liga_portugal.webp",
-//   },
-//   {
-//     id: 8,
-//     name: "Brazilian Championship Series A",
-//     href: "/league/brazilian-series-a",
-//     emblem: "/img/leagues/brazilian_serie_a.webp",
-//   },
-//   {
-//     id: 9,
-//     name: "Copa Libertadores",
-//     href: "/league/copa-libertadores",
-//     emblem: "/img/leagues/copa_libertadores.webp",
-//   },
-// ];
 
 const Sidebar: FC = async () => {
   const res = await fetch(`${baseURL}/api/leagues`, { method: "get" });

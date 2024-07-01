@@ -1,21 +1,21 @@
-import {
-  getTodayMatches,
-  getTomorrowMatches,
-  getYesterdayMatches,
-} from "@/utils/footballApi";
 import Status from "@/components/Status";
 import Sidebar from "@/components/Sidebar";
 import BlogBar from "@/components/BlogBar";
+import { baseURL } from "@/lib/footballApi";
 
 export default async function Home() {
-  const todayMatchesData = await getTodayMatches();
-  const tomorrowMatchesData = await getTomorrowMatches();
-  const yesterdayMatchesData = await getYesterdayMatches();
+  const res = await fetch(`${baseURL}/api/leagues/matches/`, { method: "GET" });
 
-  const todayMatches = todayMatchesData?.matches;
-  const tomorrowMatches = tomorrowMatchesData?.matches;
-  const yesterdayMatches = yesterdayMatchesData?.matches;
+  if (!res.ok) {
+    return <div>An error occured :( Please visit the page later</div>;
+  }
 
+  const { todayMatchesData, tomorrowMatchesData, yesterdayMatchesData } =
+    await res.json();
+
+  const todayMatches: [] = todayMatchesData?.matches;
+  const tomorrowMatches: [] = tomorrowMatchesData?.matches;
+  const yesterdayMatches: [] = yesterdayMatchesData?.matches;
   const nd = new Date();
   const dateConvert = nd.toDateString();
 

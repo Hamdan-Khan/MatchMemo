@@ -10,6 +10,7 @@ export async function GET(req: Request) {
         `http://api.football-data.org/v4/competitions/${league}/matches`,
         options
       );
+
       const result = await res.json();
       return Response.json(result.competitions);
     } else {

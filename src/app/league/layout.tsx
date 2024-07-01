@@ -9,7 +9,7 @@ export default function LeagueLayout({
   return (
     <>
       <Sidebar />
-      <div className="flex-grow">{children}</div>
+      {children}
       <BlogBar />
     </>
   );

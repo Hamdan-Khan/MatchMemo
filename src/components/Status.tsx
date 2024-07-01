@@ -51,36 +51,48 @@ const Status = ({
       </div>
 
       <div className="w-full">
-        {statusMatch === "TODAY"
-          ? matchesListToday.map((data) => (
+        {statusMatch === "TODAY" ? (
+          matchesListToday?.length > 0 ? (
+            matchesListToday?.map((data) => (
               <div key={data.id}>
                 {data?.status === "TIMED" && <LeagueTable data={data} />}
               </div>
             ))
-          : null}
+          ) : (
+            <div>No matches scheduled</div>
+          )
+        ) : null}
 
         {statusMatch === "FINISHED"
-          ? matchesListToday.map((data) => (
+          ? matchesListToday?.map((data) => (
               <div key={data.id}>
                 {data?.status === "FINISHED" && <LeagueTable data={data} />}
               </div>
             ))
           : null}
-        {statusMatch === "FINISHED"
-          ? matchesListYesterday.map((data) => (
+        {statusMatch === "FINISHED" ? (
+          matchesListYesterday?.length > 0 ? (
+            matchesListYesterday?.map((data) => (
               <div key={data.id}>
                 <LeagueTable data={data} />
               </div>
             ))
-          : null}
+          ) : (
+            <div>No matches scheduled</div>
+          )
+        ) : null}
 
-        {statusMatch === "TOMORROW"
-          ? matchesListTomorrow.map((data) => (
+        {statusMatch === "TOMORROW" ? (
+          matchesListTomorrow?.length > 0 ? (
+            matchesListTomorrow?.map((data) => (
               <div key={data.id}>
                 <LeagueTable data={data} />
               </div>
             ))
-          : null}
+          ) : (
+            <div>No matches scheduled</div>
+          )
+        ) : null}
       </div>
     </div>
   );

@@ -31,8 +31,8 @@ export const getTomorrowMatches = async () => {
   return res.json();
 };
 
-export const filterLeague = async (filterData: string) => {
-  const allMatches = await getTodayMatches();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const filterLeague = async (filterData: string, allMatches: any) => {
   const matches: matchesType[] = allMatches?.matches;
   const filteredLeagues = matches.filter(
     (item) => item.competition.name === filterData
