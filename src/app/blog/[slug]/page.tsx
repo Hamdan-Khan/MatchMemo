@@ -1,6 +1,9 @@
 import { baseURL } from "@/lib/footballApi";
 import { Blog } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 const Page = async ({ params }: { params: { slug: string } }) => {
   const res = await fetch(`${baseURL}/api/blog?id=${params.slug}`, {
     method: "get",

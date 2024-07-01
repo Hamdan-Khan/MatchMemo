@@ -1,6 +1,5 @@
-const Brasileiro = async ({ params }: { params: { slug: string } }) => {
-  //   const getBrasileiro = await filterLeague("Campeonato Brasileiro Série A");
-  return <div className="w-[600px]">{params.slug}</div>;
+const Page = async ({ params }: { params: { slug: string } }) => {
+  return <div className="w-[600px]">League - coming soon</div>;
 };
 
-export default Brasileiro;
+export default Page;

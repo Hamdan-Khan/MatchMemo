@@ -2,6 +2,9 @@ import BlogCard from "./BlogCard";
 import { baseURL } from "@/lib/footballApi";
 import { Blog } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default async function BlogBar() {
   const res = await fetch(`${baseURL}/api/blog`, { method: "get" });
   if (!res.ok) {
