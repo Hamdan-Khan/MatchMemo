@@ -2,12 +2,17 @@ import Status from "@/components/Status";
 import Sidebar from "@/components/Sidebar";
 import BlogBar from "@/components/BlogBar";
 import { baseURL } from "@/lib/footballApi";
+import Link from 'next/link'
 
 export default async function Home() {
   const res = await fetch(`${baseURL}/api/leagues/matches/`, { method: "GET" });
 
   if (!res.ok) {
-    return <div>An error occured :( Please visit the page later</div>;
+    return (
+      <>
+        <Link href="/league/cl">Leagues</Link>;
+        <Link href="/blog/4">Blogs</Link>;
+      </>)
   }
 
   const { todayMatchesData, tomorrowMatchesData, yesterdayMatchesData } =
