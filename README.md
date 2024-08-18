@@ -13,4 +13,4 @@ pnpm dev
 ```
 
 ## Live links
-[Live here 💻](https://match-memo.vercel.app/)
+[MatchMemo 💻](https://match-memo.vercel.app/)
