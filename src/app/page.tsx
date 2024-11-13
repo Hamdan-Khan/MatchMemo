@@ -3,9 +3,12 @@ import Sidebar from "@/components/Sidebar";
 import BlogBar from "@/components/BlogBar";
 import { baseURL } from "@/lib/footballApi";
 import Link from "next/link";
+import { categorizeMatches } from "@/utils/footballApi";
+
+export const revalidate = 10;
 
 export default async function Home() {
-  const res = await fetch(`${baseURL}/api/leagues/matches/`, { method: "GET" });
+  const res = await fetch(`${baseURL}/api/matches/`, { method: "GET" });
 
   if (!res.ok) {
     return (
@@ -17,11 +20,10 @@ export default async function Home() {
   }
 
   const data = await res.json();
-  const { todayMatchesData, tomorrowMatchesData, yesterdayMatchesData } = data;
+  const { matches }: { matches: [] } = data;
 
-  const todayMatches: [] = todayMatchesData?.matches;
-  const tomorrowMatches: [] = tomorrowMatchesData?.matches;
-  const yesterdayMatches: [] = yesterdayMatchesData?.matches;
+  const { earlierMatches, todayMatches, upcomingMatches } =
+    categorizeMatches(matches);
   const nd = new Date();
   const dateConvert = nd.toDateString();
 
@@ -37,8 +39,8 @@ export default async function Home() {
         </div>
         <Status
           matchesListToday={todayMatches}
-          matchesListTomorrow={tomorrowMatches}
-          matchesListYesterday={yesterdayMatches}
+          matchesListTomorrow={upcomingMatches}
+          matchesListYesterday={earlierMatches}
         />
       </section>
       <BlogBar />
