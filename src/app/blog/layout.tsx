@@ -1,6 +1,8 @@
 import BlogBar from "@/components/BlogBar";
 import Sidebar from "@/components/Sidebar";
 
+export const revalidate = 60;
+
 export default function LeagueLayout({
   children,
 }: {
