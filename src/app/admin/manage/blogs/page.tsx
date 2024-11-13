@@ -1,64 +1,82 @@
 "use client";
-import { useState } from "react";
+
+import { baseURL } from "@/lib/footballApi";
+import { Blog } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 export default function Blogs() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(false);
-  const publishBlog = async () => {
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${baseURL}/api/blog`, {
+          method: "GET",
+        });
+        const data: Blog[] = await res.json();
+        const sortedData = data.sort(
+          (a, b) =>
+            new Date(b.blogDate).getTime() - new Date(a.blogDate).getTime()
+        );
+        setBlogs(sortedData);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+      setLoading(false);
+    };
+
+    fetchBlogs();
+  }, []);
+
+  const deleteBlog = async (id: number) => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/blog/create`, {
+      const response = await fetch(`/api/blog/delete`, {
         method: "POST",
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ id: id }),
       });
       if (response.ok) {
-        setTitle("");
-        setContent("");
-        alert("Blog created!");
-        return;
+        alert("Blog deleted!");
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.blogId !== id));
+      } else {
+        alert("Error deleting post, please try again.");
       }
-      alert("Error creating post, please try again.");
     } catch (error) {
-      alert("Error creating post, please try again");
+      alert("Error deleting post, please try again");
       console.log(error);
     }
     setLoading(false);
   };
+
   return (
     <div className={`${loading ? "cursor-progress" : ""}`}>
       <div className="flex flex-col gap-4 bg-slate-900 p-6 rounded-lg max-w-[800px]">
         <h1 className="font-semibold text-3xl text-white">Manage Blogs</h1>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="px-4 py-1 rounded-md bg-slate-800 text-white focus:outline-none"
-            placeholder="Enter the blog title"
-            required
-          />
+
+        <div className="flex flex-col gap-3">
+          {blogs.map((blog) => (
+            <div
+              key={blog.blogId}
+              className="bg-secondary border border-zinc-500 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <h2 className="text-lg font-medium text-zinc-200 hover:text-zinc-400">
+                {blog.blogTitle}
+              </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                {new Date(blog.blogDate).toLocaleDateString()}
+              </p>
+              <button
+                className="bg-red-600 px-5 font-semibold py-2 rounded-md max-w-max ml-auto"
+                onClick={() => deleteBlog(blog.blogId)}
+                disabled={loading}
+              >
+                Delete
+              </button>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="content">Content</label>
-          <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Enter the blog content"
-            required
-            className="h-[200px] max-h-[200px] px-4 py-1 rounded-md bg-slate-800 text-white focus:outline-none"
-          />
-        </div>
-        <button
-          className="bg-slate-600 px-5 font-semibold py-2 rounded-md max-w-max ml-auto"
-          onClick={publishBlog}
-          disabled={loading}
-        >
-          Publish
-        </button>
       </div>
     </div>
   );
