@@ -2,7 +2,7 @@ import Status from "@/components/Status";
 import Sidebar from "@/components/Sidebar";
 import BlogBar from "@/components/BlogBar";
 import { baseURL } from "@/lib/footballApi";
-import Link from 'next/link'
+import Link from "next/link";
 
 export default async function Home() {
   const res = await fetch(`${baseURL}/api/leagues/matches/`, { method: "GET" });
@@ -10,13 +10,14 @@ export default async function Home() {
   if (!res.ok) {
     return (
       <>
-        <Link href="/league/cl">Leagues</Link>;
-        <Link href="/blog/4">Blogs</Link>;
-      </>)
+        <Link href="/league/cl">Leagues</Link>
+        <Link href="/blog/4">Blogs</Link>
+      </>
+    );
   }
 
-  const { todayMatchesData, tomorrowMatchesData, yesterdayMatchesData } =
-    await res.json();
+  const data = await res.json();
+  const { todayMatchesData, tomorrowMatchesData, yesterdayMatchesData } = data;
 
   const todayMatches: [] = todayMatchesData?.matches;
   const tomorrowMatches: [] = tomorrowMatchesData?.matches;
