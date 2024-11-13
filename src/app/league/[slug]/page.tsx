@@ -1,31 +1,24 @@
 import Status from "@/components/Status";
 import { baseURL } from "@/lib/footballApi";
+import { categorizeMatches } from "@/utils/footballApi";
 
-type match = { competition: { code: string } };
+export const revalidate = 10;
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  const res = await fetch(`${baseURL}/api/leagues/matches/`, { method: "GET" });
+  const res = await fetch(`${baseURL}/api/leagues?league=${params.slug}`, {
+    method: "GET",
+    next: { revalidate: 10 },
+  });
 
-  if (!res.ok) {
+  const data = await res.json();
+
+  if (data.status != 200) {
     return <div>An error occured :( Please visit the page later</div>;
   }
 
-  const { todayMatchesData, tomorrowMatchesData, yesterdayMatchesData } =
-    await res.json();
-
-  const todayMatches: [] = todayMatchesData?.matches.filter((m: match) => {
-    return m.competition.code == params.slug;
-  });
-  const tomorrowMatches: [] = tomorrowMatchesData?.matches.filter(
-    (m: match) => {
-      return m.competition.code == params.slug;
-    }
-  );
-  const yesterdayMatches: [] = yesterdayMatchesData?.matches.filter(
-    (m: match) => {
-      return m.competition.code == params.slug;
-    }
-  );
+  const { matches } = data;
+  const { earlierMatches, todayMatches, upcomingMatches } =
+    categorizeMatches(matches);
 
   const nd = new Date();
   const dateConvert = nd.toDateString();
@@ -39,8 +32,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       </div>
       <Status
         matchesListToday={todayMatches}
-        matchesListTomorrow={tomorrowMatches}
-        matchesListYesterday={yesterdayMatches}
+        matchesListTomorrow={upcomingMatches}
+        matchesListYesterday={earlierMatches}
       />
     </section>
   );
