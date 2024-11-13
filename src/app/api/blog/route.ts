@@ -14,7 +14,13 @@ export async function GET(req: Request) {
       });
       return Response.json(result);
     } else {
-      const result = await prisma.blog.findMany();
+      const result = await prisma.blog.findMany({
+        select: {
+          blogId: true,
+          blogTitle: true,
+          blogDate: true,
+        },
+      });
       return Response.json(result);
     }
   } catch (error) {
