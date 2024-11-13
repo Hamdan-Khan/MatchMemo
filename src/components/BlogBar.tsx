@@ -20,11 +20,12 @@ export default async function BlogBar() {
         </h1>
         <ul className="flex flex-col gap-3">
           {blogs.map((blog) => {
-            const { blogTitle, blogDescription, blogId } = blog;
-            const reducedContent =
-              blogDescription.length <= 65
-                ? blogDescription
-                : blogDescription.slice(0, 65) + "...";
+            const { blogTitle, blogId } = blog;
+            // const reducedContent =
+            //   blogDescription.length <= 65
+            //     ? blogDescription
+            //     : blogDescription.slice(0, 65) + "...";
+            const reducedContent = "Click to view blog content";
             return (
               <BlogCard
                 key={blogId}
