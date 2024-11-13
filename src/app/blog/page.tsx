@@ -16,7 +16,7 @@ export default async function Blog() {
       <h1 className="text-2xl font-semibold mb-6 text-white">All Blogs</h1>
       <div className="flex flex-col gap-3">
         {sorted.map((blog) => (
-          <Link href={`/blog/${blog.blogId}`}>
+          <Link href={`/blog/${blog.blogId}`} key={blog.blogId}>
             <div
               key={blog.blogId}
               className="bg-secondary border border-zinc-500 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
