@@ -1,79 +1,82 @@
-"use client";
-
 import { baseURL } from "@/lib/footballApi";
 import { Blog } from "@prisma/client";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { revalidatePath } from "next/cache";
 
-export default function Blogs() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(false);
+async function deleteBlog(formData: FormData) {
+  "use server";
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`${baseURL}/api/blog`, {
-          method: "GET",
-        });
-        const data: Blog[] = await res.json();
-        const sortedData = data.sort(
-          (a, b) =>
-            new Date(b.blogDate).getTime() - new Date(a.blogDate).getTime()
-        );
-        setBlogs(sortedData);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-      setLoading(false);
-    };
+  const id = Number(formData.get("id"));
+  try {
+    const response = await fetch(`${baseURL}/api/blog/delete`, {
+      method: "POST",
+      body: JSON.stringify({ id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    fetchBlogs();
-  }, []);
-
-  const deleteBlog = async (id: number) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/blog/delete`, {
-        method: "POST",
-        body: JSON.stringify({ id: id }),
-      });
-      if (response.ok) {
-        alert("Blog deleted!");
-        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.blogId !== id));
-      } else {
-        alert("Error deleting post, please try again.");
-      }
-    } catch (error) {
-      alert("Error deleting post, please try again");
-      console.log(error);
+    if (!response.ok) {
+      throw new Error("Failed to delete blog");
     }
-    setLoading(false);
-  };
+
+    revalidatePath("/admin/manage/blogs");
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    throw error;
+  }
+}
+
+export default async function Blogs() {
+  const res = await fetch(`${baseURL}/api/blog`, {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch blogs");
+  }
+
+  const data: Blog[] = await res.json();
+  const blogs = data.sort(
+    (a, b) => new Date(b.blogDate).getTime() - new Date(a.blogDate).getTime()
+  );
 
   return (
-    <div className={`${loading ? "cursor-progress" : ""}`}>
-      <div className="flex flex-col gap-4 bg-slate-900 p-6 rounded-lg max-w-[800px]">
+    <div>
+      <div className="flex flex-col gap-4 bg-outer border border-zinc-700 p-6 rounded-lg max-w-[800px]">
         <h1 className="font-semibold text-3xl text-white">Manage Blogs</h1>
 
         <div className="flex flex-col gap-3">
           {blogs.map((blog) => (
             <div
               key={blog.blogId}
-              className="bg-secondary border border-zinc-500 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-inner border border-zinc-600 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
             >
-              <h2 className="text-lg font-medium text-zinc-200 hover:text-zinc-400">
-                {blog.blogTitle}
-              </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <Link href={`/blog/${blog.blogId}`}>
+                <h2 className="text-lg font-medium text-zinc-200 hover:text-zinc-400">
+                  {blog.blogTitle}
+                </h2>
+              </Link>
+              <p className="text-sm text-gray-400 mt-1">
                 {new Date(blog.blogDate).toLocaleDateString()}
               </p>
-              <button
-                className="bg-red-600 px-5 font-semibold py-2 rounded-md max-w-max ml-auto"
-                onClick={() => deleteBlog(blog.blogId)}
-                disabled={loading}
-              >
-                Delete
-              </button>
+              <div className="my-3 flex gap-4">
+                <form action={deleteBlog}>
+                  <input type="hidden" name="id" value={blog.blogId} />
+                  <button
+                    type="submit"
+                    className="bg-red-600 px-5 font-semibold py-2 rounded-md max-w-max ml-auto"
+                  >
+                    Delete
+                  </button>
+                </form>
+                <Link href={`/admin/manage/blogs/edit/${blog.blogId}`}>
+                  <button className="bg-yellow-600 px-5 font-semibold py-2 rounded-md max-w-max ml-auto">
+                    Edit
+                  </button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>
