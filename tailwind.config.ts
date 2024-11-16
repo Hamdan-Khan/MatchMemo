@@ -18,6 +18,8 @@ const config: Config = {
         secondary: "#393E46",
         textPrimary: "#D8D9DA",
         textHeading: "#2dd46a",
+        outer: "rgb(45,51,63)",
+        inner: "rgb(51,65,85)",
       },
     },
   },
