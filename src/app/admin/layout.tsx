@@ -1,3 +1,4 @@
+import { AdminInfo } from "@/components/AdminInfo";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
@@ -13,7 +14,10 @@ export default async function AdminLayout({
   if (session) {
     return (
       <>
-        <AdminSidebar />
+        <nav className="flex flex-col gap-4">
+          <AdminSidebar />
+          <AdminInfo />
+        </nav>
         <div className="flex-grow">{children}</div>
       </>
     );
