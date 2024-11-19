@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import LinkSide from "./LinkSide";
 import { baseURL } from "@/lib/footballApi";
+import { getSession } from "next-auth/react";
 
 interface League {
   id: number;
@@ -15,9 +16,17 @@ interface League {
   emblem: string;
 }
 
-const links = [
+interface NavLink {
+  id: number;
+  name: string;
+  href: string;
+  isAdmin?: boolean;
+}
+
+const links: NavLink[] = [
   { id: 1, name: "Home", href: "/" },
   { id: 2, name: "Blogs", href: "/blog" },
+  { id: 3, name: "Admin Panel", href: "/admin", isAdmin: true },
 ];
 
 const adminUtils = [
@@ -30,14 +39,23 @@ const Navbar: FC = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [leagues, setLeagues] = useState<League[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const isAdminPage = pathname.startsWith("/admin");
+
   useEffect(() => {
-    const fetchLeagues = async () => {
+    const initializeNavbar = async () => {
       try {
+        // Check admin status
+        const session = await getSession();
+        setIsAdmin(!!session);
+
+        // Fetch leagues
         const res = await fetch(`${baseURL}/api/leagues`, {
           method: "GET",
         });
@@ -47,13 +65,24 @@ const Navbar: FC = () => {
         const data = await res.json();
         setLeagues(data ?? []);
       } catch (error) {
-        console.error("Error fetching leagues:", error);
+        console.error("Error initializing navbar:", error);
         setLeagues([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchLeagues();
+    initializeNavbar();
   }, []);
+
+  // Filter visible links based on admin status
+  const visibleLinks = links.filter(
+    (link) => !link.isAdmin || (link.isAdmin && isAdmin)
+  );
+
+  if (isLoading) {
+    return null; // Or return a loading skeleton
+  }
 
   return (
     <nav className="flex justify-between items-center py-3 md:py-4">
@@ -70,7 +99,7 @@ const Navbar: FC = () => {
       </Link>
 
       <ul className="hidden md:flex gap-4 md:gap-7">
-        {links.map((link) => (
+        {visibleLinks.map((link) => (
           <Link
             key={link.id}
             href={link.href}
@@ -106,7 +135,7 @@ const Navbar: FC = () => {
               Navigation
             </h3>
             <ul className="space-y-2">
-              {links.map((link) => (
+              {visibleLinks.map((link) => (
                 <li key={link.id}>
                   <Link href={link.href} onClick={toggleMenu}>
                     <div
@@ -125,29 +154,31 @@ const Navbar: FC = () => {
             </ul>
           </div>
 
-          <div className="p-4 border-b border-gray-700">
-            <h3 className="text-lg font-semibold text-[rgb(137,160,223)] mb-4">
-              Admin
-            </h3>
-            <ul className="space-y-2">
-              {adminUtils.map((util) => (
-                <li key={util.id}>
-                  <Link href={`/admin${util.href}`} onClick={toggleMenu}>
-                    <div
-                      className={`py-2 px-3 rounded-md transition-colors duration-200 
+          {isAdmin && isAdminPage && (
+            <div className="p-4 border-b border-gray-700">
+              <h3 className="text-lg font-semibold text-[rgb(137,160,223)] mb-4">
+                Admin
+              </h3>
+              <ul className="space-y-2">
+                {adminUtils.map((util) => (
+                  <li key={util.id}>
+                    <Link href={`/admin${util.href}`} onClick={toggleMenu}>
+                      <div
+                        className={`py-2 px-3 rounded-md transition-colors duration-200 
                         ${
                           pathname === `/admin${util.href}`
                             ? "bg-inner text-white"
                             : "text-gray-300 hover:bg-inner hover:text-white"
                         }`}
-                    >
-                      {util.name}
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                      >
+                        {util.name}
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="p-4">
             <h3 className="text-lg font-semibold text-textHeading mb-4">
