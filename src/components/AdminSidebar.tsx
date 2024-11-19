@@ -2,19 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Button from "./Button";
 
 const adminUtils = [
   { id: 0, name: "Home", href: "" },
   {
     id: 1,
     name: "Blogging",
-    href: "blogs",
+    href: "/manage/blogs",
   },
   {
     id: 2,
     name: "Player Rating",
-    href: "ratings",
+    href: "/manage/ratings",
   },
 ];
 
@@ -28,10 +27,10 @@ export const AdminSidebar: React.FC = async () => {
         </h1>
         <ul className="space-y-2">
           {adminUtils.map((util) => (
-            <Link href={`/admin/manage/${util.href}`} key={util?.id}>
+            <Link href={`/admin/${util.href}`} key={util?.id}>
               <div
                 className={`py-2 my-1 px-3 duration-500 rounded-md hover:bg-inner ${
-                  pathname == `/admin/manage/${util.href}` ? "bg-inner" : ""
+                  pathname == `/admin${util.href}` ? "bg-inner" : ""
                 }`}
               >
                 {util.name}
