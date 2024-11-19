@@ -16,83 +16,93 @@ const Status = ({
   const [statusMatch, setStatusMatch] = useState("TODAY");
 
   return (
-    <div>
-      <div className="flex space-x-4 mb-2 md:mb-4">
+    <div className="w-full">
+      <div className="flex gap-2 md:gap-4 mb-4 overflow-x-auto pb-2">
         <button
           onClick={() => setStatusMatch("FINISHED")}
-          className={`px-2 py-1 text-primary text-sm rounded-md ${
+          className={`px-3 py-1.5 text-primary text-xs md:text-sm rounded-md whitespace-nowrap transition-colors ${
             statusMatch === "FINISHED"
               ? "bg-teal-400 font-semibold"
-              : "bg-slate-500 font-regular"
+              : "bg-slate-500 hover:bg-slate-400"
           }`}
         >
           Finished
         </button>
         <button
           onClick={() => setStatusMatch("TODAY")}
-          className={`px-2 py-1 text-primary text-xs md:text-sm rounded-md ${
+          className={`px-3 py-1.5 text-primary text-xs md:text-sm rounded-md whitespace-nowrap transition-colors ${
             statusMatch === "TODAY"
               ? "bg-teal-400 font-semibold"
-              : "bg-slate-500 font-regular"
+              : "bg-slate-500 hover:bg-slate-400"
           }`}
         >
           Today
         </button>
         <button
           onClick={() => setStatusMatch("TOMORROW")}
-          className={`px-2 py-1 text-primary text-xs md:text-sm rounded-md ${
+          className={`px-3 py-1.5 text-primary text-xs md:text-sm rounded-md whitespace-nowrap transition-colors ${
             statusMatch === "TOMORROW"
               ? "bg-teal-400 font-semibold"
-              : "bg-slate-500 font-regular"
+              : "bg-slate-500 hover:bg-slate-400"
           }`}
         >
           Upcoming
         </button>
       </div>
 
-      <div className="w-full">
-        {statusMatch === "TODAY" ? (
-          matchesListToday?.length > 0 ? (
-            matchesListToday?.map((data) => (
-              <div key={data.id}>
-                {data?.status === "TIMED" && <LeagueTable data={data} />}
+      <div className="space-y-3">
+        {statusMatch === "TODAY" && (
+          <>
+            {matchesListToday?.length > 0 ? (
+              matchesListToday?.map((data) => (
+                <div key={data.id}>
+                  {data?.status === "TIMED" && <LeagueTable data={data} />}
+                </div>
+              ))
+            ) : (
+              <div className="text-sm md:text-base text-gray-400">
+                No matches scheduled
               </div>
-            ))
-          ) : (
-            <div>No matches scheduled</div>
-          )
-        ) : null}
+            )}
+          </>
+        )}
 
-        {statusMatch === "FINISHED"
-          ? matchesListToday?.map((data) => (
+        {statusMatch === "FINISHED" && (
+          <>
+            {matchesListToday?.map((data) => (
               <div key={data.id}>
                 {data?.status === "FINISHED" && <LeagueTable data={data} />}
               </div>
-            ))
-          : null}
-        {statusMatch === "FINISHED" ? (
-          matchesListYesterday?.length > 0 ? (
-            matchesListYesterday?.map((data) => (
-              <div key={data.id}>
-                <LeagueTable data={data} />
+            ))}
+            {matchesListYesterday?.length > 0 ? (
+              matchesListYesterday?.map((data) => (
+                <div key={data.id}>
+                  <LeagueTable data={data} />
+                </div>
+              ))
+            ) : (
+              <div className="text-sm md:text-base text-gray-400">
+                No matches scheduled
               </div>
-            ))
-          ) : (
-            <div>No matches scheduled</div>
-          )
-        ) : null}
+            )}
+          </>
+        )}
 
-        {statusMatch === "TOMORROW" ? (
-          matchesListTomorrow?.length > 0 ? (
-            matchesListTomorrow?.map((data) => (
-              <div key={data.id}>
-                <LeagueTable data={data} />
+        {statusMatch === "TOMORROW" && (
+          <>
+            {matchesListTomorrow?.length > 0 ? (
+              matchesListTomorrow?.map((data) => (
+                <div key={data.id}>
+                  <LeagueTable data={data} />
+                </div>
+              ))
+            ) : (
+              <div className="text-sm md:text-base text-gray-400">
+                No matches scheduled
               </div>
-            ))
-          ) : (
-            <div>No matches scheduled</div>
-          )
-        ) : null}
+            )}
+          </>
+        )}
       </div>
     </div>
   );

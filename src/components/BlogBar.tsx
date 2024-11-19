@@ -9,7 +9,7 @@ export const fetchCache = "force-no-store";
 export default async function BlogBar() {
   const res = await fetch(`${baseURL}/api/blog`, { method: "get" });
   if (!res.ok) {
-    return <div>Error fetching data</div>;
+    return <div className="text-gray-400">Error fetching data</div>;
   }
 
   const blogs: Blog[] = await res.json();
@@ -19,7 +19,7 @@ export default async function BlogBar() {
     )
     .slice(0, 5);
   return (
-    <aside className="flex flex-col bg-[rgb(40,46,58)] px-2 md:px-4 py-2 rounded-md w-[300px] h-max pb-6">
+    <aside className="flex flex-col bg-[rgb(40,46,58)] p-4 rounded-md w-full md:w-[300px] h-max">
       <div>
         <h1 className="font-bold text-xl mb-4 text-slate-400 text-center">
           Blogs
@@ -27,10 +27,6 @@ export default async function BlogBar() {
         <div className="flex flex-col gap-3">
           {sorted.map((blog) => {
             const { blogTitle, blogId } = blog;
-            // const reducedContent =
-            //   blogDescription.length <= 65
-            //     ? blogDescription
-            //     : blogDescription.slice(0, 65) + "...";
             const reducedContent = "Click to view blog content";
             return (
               <BlogCard
@@ -44,7 +40,7 @@ export default async function BlogBar() {
         </div>
         {blogs.length > 5 ? (
           <p className="mt-4 text-center">
-            <Link href="/blog" className="hover:underline">
+            <Link href="/blog" className="text-blue-400 hover:underline">
               View all...
             </Link>
           </p>

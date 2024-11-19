@@ -9,9 +9,9 @@ const Matches = ({ data }: { data: matchesType }) => {
   });
 
   return (
-    <div className="grid grid-cols-3">
+    <div className="grid grid-cols-3 gap-2">
       <div className="w-full flex items-center">
-        <div className="w-[20px] h-[20px] relative mr-2">
+        <div className="w-[20px] h-[20px] relative mr-2 flex-shrink-0">
           <Image
             src={data?.homeTeam?.crest!}
             alt={data?.homeTeam?.name!}
@@ -19,7 +19,7 @@ const Matches = ({ data }: { data: matchesType }) => {
             className="object-cover"
           />
         </div>
-        <p className="text-sm">{data?.homeTeam?.name}</p>
+        <p className="text-xs md:text-sm truncate">{data?.homeTeam?.name}</p>
       </div>
       <div className="px-2 m-auto flex justify-center items-center bg-slate-600 rounded-md">
         {data?.status == "FINISHED" ? (
@@ -31,8 +31,10 @@ const Matches = ({ data }: { data: matchesType }) => {
         )}
       </div>
       <div className="w-full flex items-center justify-end">
-        <p className="text-sm text-right">{data.awayTeam?.name}</p>
-        <div className="w-[20px] h-[20px] relative ml-2">
+        <p className="text-xs md:text-sm truncate text-right">
+          {data.awayTeam?.name}
+        </p>
+        <div className="w-[20px] h-[20px] relative ml-2 flex-shrink-0">
           <Image
             src={data?.awayTeam?.crest!}
             alt={data.awayTeam?.name!}

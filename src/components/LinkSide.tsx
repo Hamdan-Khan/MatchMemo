@@ -11,10 +11,12 @@ const LinkSide = ({ href, name, src }: linkProps) => {
   return (
     <Link
       href={`/league/${href}`}
-      className="flex items-center py-2 px-2 rounded-md hover:bg-[rgb(54,63,78)]"
+      className="flex items-center p-2 rounded-md hover:bg-[rgb(54,63,78)] transition-colors"
     >
-      <Image src={src} alt={name} width={20} height={20} />
-      <p className="ml-4 text-xs md:text-sm">{name}</p>
+      <div className="w-5 h-5 relative flex-shrink-0">
+        <Image src={src} alt={name} fill className="object-contain" />
+      </div>
+      <p className="ml-3 text-sm text-gray-300 truncate">{name}</p>
     </Link>
   );
 };

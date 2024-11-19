@@ -20,10 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex flex-col px-2 md:px-16 md:py-2 md:m-auto text-textPrimary">
+        <main className="flex flex-col min-h-screen w-full px-3 sm:px-4 md:px-8 lg:px-16 py-2 text-textPrimary">
           <Navbar />
           <NextAuthSessionProvider>
-            <section className="flex space-x-4 justify-center">
+            <section className="flex flex-col md:flex-row gap-4 md:gap-6 md:justify-between flex-1">
               {children}
             </section>
           </NextAuthSessionProvider>

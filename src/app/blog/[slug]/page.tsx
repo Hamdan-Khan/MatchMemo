@@ -10,9 +10,9 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   });
   if (!res.ok) {
     return (
-      <section className="w-auto">
-        <div className="bg-slate-900 p-6 rounded-xl max-w-[700px] m-auto">
-          <h1 className="text-3xl font-bold ">Blog not found</h1>
+      <section className="w-full p-4">
+        <div className="bg-slate-900 p-4 md:p-6 rounded-xl max-w-[700px] mx-auto">
+          <h1 className="text-2xl md:text-3xl font-bold">Blog not found</h1>
         </div>
       </section>
     );
@@ -25,12 +25,16 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     year: "numeric",
   });
   return (
-    <section className="w-auto">
-      <div className="bg-slate-900 p-6 rounded-xl max-w-[700px] m-auto">
-        <h1 className="text-3xl font-bold ">{blogData.blogTitle}</h1>
-        <div className="h-[1px] bg-slate-600 my-2"></div>
-        <h3 className="text-sm text-slate-400">{formattedDate}</h3>
-        <p className="mt-4 whitespace-pre-wrap">{blogData.blogDescription}</p>
+    <section className="w-full p-4">
+      <div className="bg-slate-900 p-4 md:p-6 rounded-xl max-w-[700px] mx-auto">
+        <h1 className="text-2xl md:text-3xl font-bold break-words">
+          {blogData.blogTitle}
+        </h1>
+        <div className="h-[1px] bg-slate-600 my-2 md:my-3"></div>
+        <h3 className="text-xs md:text-sm text-slate-400">{formattedDate}</h3>
+        <p className="mt-4 whitespace-pre-wrap text-sm md:text-base">
+          {blogData.blogDescription}
+        </p>
       </div>
     </section>
   );
