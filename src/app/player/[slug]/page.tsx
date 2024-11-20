@@ -3,6 +3,7 @@ import { PlayerResponse } from "@/types/player";
 import PlayerHeader from "@/components/Player/PlayerHeader";
 import CurrentTeamSection from "@/components/Player/CurrentTeamSection";
 import CompetitionsSection from "@/components/Player/CompetitionSection";
+import PlayerRating from "@/components/Rating/PlayerRating";
 
 async function PlayerPage({ params }: { params: { slug: string } }) {
   const res = await fetch(`${baseURL}/api/player?player=${params.slug}`, {
@@ -30,6 +31,7 @@ async function PlayerPage({ params }: { params: { slug: string } }) {
           competitions={player.currentTeam.runningCompetitions}
         />
       )}
+      <PlayerRating playerId={player.id} teamId={player.currentTeam.id} />
     </div>
   );
 }
