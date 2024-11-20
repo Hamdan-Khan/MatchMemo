@@ -75,14 +75,9 @@ const Navbar: FC = () => {
     initializeNavbar();
   }, []);
 
-  // Filter visible links based on admin status
   const visibleLinks = links.filter(
     (link) => !link.isAdmin || (link.isAdmin && isAdmin)
   );
-
-  if (isLoading) {
-    return null; // Or return a loading skeleton
-  }
 
   return (
     <nav className="flex justify-between items-center py-3 md:py-4">
@@ -185,15 +180,21 @@ const Navbar: FC = () => {
               Leagues
             </h3>
             <div className="space-y-2">
-              {leagues.map((league) => (
-                <div key={league.id} className="py-1">
-                  <LinkSide
-                    href={league.code}
-                    name={league.name}
-                    src={league.emblem}
-                  />
+              {isLoading ? (
+                <div className="text-gray-400 animate-pulse">
+                  Loading leagues...
                 </div>
-              ))}
+              ) : (
+                leagues.map((league) => (
+                  <div key={league.id} className="py-1">
+                    <LinkSide
+                      href={league.code}
+                      name={league.name}
+                      src={league.emblem}
+                    />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
