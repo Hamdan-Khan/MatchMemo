@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { StandingsType } from "@/types";
+import Link from "next/link";
 
 export default function Standings({
   standings,
@@ -40,19 +41,21 @@ export default function Standings({
                   >
                     <td className="py-2 text-left">{team.position}</td>
                     <td className="py-2">
-                      <div className="flex items-center gap-2">
-                        <div className="relative w-4 h-4">
-                          <Image
-                            src={team.team.crest}
-                            alt={team.team.name}
-                            fill
-                            className="object-contain"
-                          />
+                      <Link href={`/team/${team.team.id}`}>
+                        <div className="flex items-center gap-2">
+                          <div className="relative w-4 h-4">
+                            <Image
+                              src={team.team.crest}
+                              alt={team.team.name}
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                          <span className="truncate" title={team.team.name}>
+                            {team.team.shortName}
+                          </span>
                         </div>
-                        <span className="truncate" title={team.team.name}>
-                          {team.team.shortName}
-                        </span>
-                      </div>
+                      </Link>
                     </td>
                     <td className="py-2 text-center">{team.playedGames}</td>
                     <td className="py-2 text-center">{team.goalDifference}</td>
