@@ -39,7 +39,7 @@ const Status = ({
   }
 
   const filteredMatches = getFilteredMatches()
-  const totalPages = Math.ceil(filteredMatches.length / itemsPerPage)
+  const totalPages = Math.ceil(filteredMatches?.length / itemsPerPage)
 
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -49,7 +49,7 @@ const Status = ({
     setCurrentPage((prev) => Math.max(prev - 1, 1))
   }
 
-  const paginatedMatches = filteredMatches.slice(
+  const paginatedMatches = filteredMatches?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   )
@@ -117,7 +117,7 @@ const Status = ({
       </div>
 
       <div className="space-y-3">
-        {paginatedMatches.length > 0 ? (
+        {paginatedMatches?.length > 0 ? (
           paginatedMatches.map((data) => (
             <div key={data.id}>
               <LeagueTable data={data} />
