@@ -27,6 +27,7 @@ const links: NavLink[] = [
   { id: 1, name: "Home", href: "/" },
   { id: 2, name: "Blogs", href: "/blog" },
   { id: 3, name: "Admin Panel", href: "/admin", isAdmin: true },
+  { id: 4, name: "About", href: "/about"}
 ];
 
 const adminUtils = [
