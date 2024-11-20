@@ -9,10 +9,12 @@ const Status = ({
   matchesListToday,
   matchesListYesterday,
   matchesListTomorrow,
+  matchesListLive,
 }: {
   matchesListToday: matchesType[]
   matchesListYesterday: matchesType[]
   matchesListTomorrow: matchesType[]
+  matchesListLive: matchesType[]
 }) => {
   const [statusMatch, setStatusMatch] = useState("TODAY")
   const [currentPage, setCurrentPage] = useState(1)
@@ -22,6 +24,8 @@ const Status = ({
     switch (statusMatch) {
       case "TODAY":
         return matchesListToday?.filter((data) => data?.status === "TIMED") || []
+      case "IN_PLAY":
+        return matchesListLive
       case "FINISHED":
         return [
           ...matchesListToday?.filter((data) => data?.status === "FINISHED") || [],
@@ -53,6 +57,24 @@ const Status = ({
   return (
     <div className="w-full">
       <div className="flex gap-2 md:gap-4 mb-4 overflow-x-auto pb-2">
+      <button
+          onClick={() => {
+            setStatusMatch("IN_PLAY")
+            setCurrentPage(1)
+          }}
+          className={`px-3 py-1.5 text-primary text-xs md:text-sm rounded-md whitespace-nowrap transition-colors ${
+            statusMatch === "IN_PLAY"
+              ? "bg-teal-400 font-semibold"
+              : "bg-slate-500 hover:bg-slate-400"
+          }`}
+        >
+          <span
+            className={`inline-block w-2.5 h-2.5 rounded-full mr-2 ${
+              matchesListLive?.length > 0 ? "bg-red-500" : "bg-gray-600"
+            }`} 
+          ></span>
+          LIVE {(matchesListLive?.length || 0)}
+        </button>
         <button
           onClick={() => {
             setStatusMatch("FINISHED")
