@@ -1,62 +1,64 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { matchesType } from "@/types"
-import LeagueTable from "./LeagueTable"
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState } from "react";
+import { matchesType } from "@/types";
+import LeagueTable from "./LeagueTable";
 
 const Status = ({
   matchesListToday,
   matchesListYesterday,
   matchesListTomorrow,
 }: {
-  matchesListToday: matchesType[]
-  matchesListYesterday: matchesType[]
-  matchesListTomorrow: matchesType[]
+  matchesListToday: matchesType[];
+  matchesListYesterday: matchesType[];
+  matchesListTomorrow: matchesType[];
 }) => {
-  const [statusMatch, setStatusMatch] = useState("TODAY")
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 4
+  const [statusMatch, setStatusMatch] = useState("TODAY");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const getFilteredMatches = () => {
     switch (statusMatch) {
       case "TODAY":
-        return matchesListToday?.filter((data) => data?.status === "TIMED") || []
+        return (
+          matchesListToday?.filter((data) => data?.status === "TIMED") || []
+        );
       case "FINISHED":
         return [
-          ...matchesListToday?.filter((data) => data?.status === "FINISHED") || [],
-          ...matchesListYesterday || [],
-        ]
+          ...(matchesListToday?.filter((data) => data?.status === "FINISHED") ||
+            []),
+          ...(matchesListYesterday || []),
+        ];
       case "TOMORROW":
-        return matchesListTomorrow || []
+        return matchesListTomorrow || [];
       default:
-        return []
+        return [];
     }
-  }
+  };
 
-  const filteredMatches = getFilteredMatches()
-  const totalPages = Math.ceil(filteredMatches.length / itemsPerPage)
+  const filteredMatches = getFilteredMatches();
+  const totalPages = Math.ceil(filteredMatches.length / itemsPerPage);
 
   const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-  }
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
 
   const handlePrevPage = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1))
-  }
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
 
   const paginatedMatches = filteredMatches.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  )
+  );
 
   return (
     <div className="w-full">
       <div className="flex gap-2 md:gap-4 mb-4 overflow-x-auto pb-2">
         <button
           onClick={() => {
-            setStatusMatch("FINISHED")
-            setCurrentPage(1)
+            setStatusMatch("FINISHED");
+            setCurrentPage(1);
           }}
           className={`px-3 py-1.5 text-primary text-xs md:text-sm rounded-md whitespace-nowrap transition-colors ${
             statusMatch === "FINISHED"
@@ -64,12 +66,15 @@ const Status = ({
               : "bg-slate-500 hover:bg-slate-400"
           }`}
         >
-          Finished {(matchesListToday?.filter((data) => data?.status === "FINISHED").length)+(matchesListYesterday.length)}
+          Finished (
+          {matchesListToday?.filter((data) => data?.status === "FINISHED")
+            .length + matchesListYesterday.length}
+          )
         </button>
         <button
           onClick={() => {
-            setStatusMatch("TODAY")
-            setCurrentPage(1)
+            setStatusMatch("TODAY");
+            setCurrentPage(1);
           }}
           className={`px-3 py-1.5 text-primary text-xs md:text-sm rounded-md whitespace-nowrap transition-colors ${
             statusMatch === "TODAY"
@@ -77,12 +82,13 @@ const Status = ({
               : "bg-slate-500 hover:bg-slate-400"
           }`}
         >
-          Today {} {matchesListToday?.filter((data) => data?.status === "TIMED").length}
+          Today (
+          {matchesListToday?.filter((data) => data?.status === "TIMED").length})
         </button>
         <button
           onClick={() => {
-            setStatusMatch("TOMORROW")
-            setCurrentPage(1)
+            setStatusMatch("TOMORROW");
+            setCurrentPage(1);
           }}
           className={`px-3 py-1.5 text-primary text-xs md:text-sm rounded-md whitespace-nowrap transition-colors ${
             statusMatch === "TOMORROW"
@@ -90,7 +96,7 @@ const Status = ({
               : "bg-slate-500 hover:bg-slate-400"
           }`}
         >
-          Upcoming {} {matchesListTomorrow.length}
+          Upcoming ({matchesListTomorrow.length})
         </button>
       </div>
 
@@ -102,7 +108,9 @@ const Status = ({
             </div>
           ))
         ) : (
-          <div className="text-sm md:text-base text-gray-400">No matches scheduled</div>
+          <div className="text-sm md:text-base text-gray-400">
+            No matches scheduled
+          </div>
         )}
       </div>
 
@@ -128,7 +136,7 @@ const Status = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Status
+export default Status;
