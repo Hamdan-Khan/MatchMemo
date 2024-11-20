@@ -24,7 +24,7 @@ export default async function AdminLayout({
   }
   if (!session) {
     return (
-      <div className="p-4 px-8 bg-slate-700 rounded-lg flex flex-col justify-center items-center">
+      <div className="p-4 px-8 bg-slate-700 rounded-lg flex flex-col justify-center items-center max-h-max mx-auto mt-10">
         <h1 className="text-3xl font-semibold mb-1">Restricted Resources</h1>
         <p className="text-slate-300">Authorize yourself to access</p>
         <Link href="/api/auth/signin">
