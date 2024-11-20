@@ -1,6 +1,7 @@
 import Status from "@/components/Status";
 import { baseURL } from "@/lib/footballApi";
 import { categorizeMatches } from "@/utils/footballApi";
+import Image from "next/image";
 
 export const revalidate = 10;
 
@@ -22,7 +23,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     );
   }
 
-  const { matches } = data;
+  const { matches, competition } = data;
   const { earlierMatches, todayMatches, upcomingMatches } =
     categorizeMatches(matches);
 
@@ -30,6 +31,18 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const dateConvert = nd.toDateString();
   return (
     <section className="flex-grow w-full md:max-w-[600px] p-4">
+      <div className="flex justify-between items-center mb-4 border-b border-zinc-500 pb-2">
+        <h1 className="text-xl md:text-2xl font-bold">{competition.name}</h1>
+
+        <div className="w-10 h-10 relative flex-shrink-0">
+          <Image
+            src={competition.emblem}
+            alt={competition.name}
+            fill
+            className="object-contain"
+          />
+        </div>
+      </div>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl md:text-2xl font-bold">MATCHES</h1>
         <div className="px-3 md:px-4 py-1 bg-slate-600 rounded-md text-textPrimary text-sm">

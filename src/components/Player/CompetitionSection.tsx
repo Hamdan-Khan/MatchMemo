@@ -8,7 +8,7 @@ export default function CompetitionsSection({
   competitions: Competition[];
 }) {
   return (
-    <div className="bg-secondary rounded-lg p-6 mb-8">
+    <div className="bg-secondary rounded-lg p-6">
       <h2 className="text-2xl font-semibold mb-4 text-white">
         Current Competitions
       </h2>
@@ -26,7 +26,6 @@ export default function CompetitionsSection({
                 className="object-contain"
               />
             </div>
-
             <Link href={`/league/${competition.code}`}>
               <div>
                 <p className="font-medium text-white">{competition.name}</p>

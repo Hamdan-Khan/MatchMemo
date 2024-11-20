@@ -1,4 +1,5 @@
 import { Player } from "@/types";
+import Link from "next/link";
 
 export default function SquadSection({ squad }: { squad: Player[] }) {
   return (
@@ -30,7 +31,7 @@ export default function SquadSection({ squad }: { squad: Player[] }) {
                   >
                     <td className="p-2 text-gray-300">{i + 1}</td>
                     <td className="p-2 text-white font-medium">
-                      {player.name}
+                      <Link href={`/player/${player.id}`}>{player.name}</Link>
                     </td>
                     <td className="p-2 text-gray-300">{player.position}</td>
                     <td className="p-2 text-gray-300">{player.nationality}</td>

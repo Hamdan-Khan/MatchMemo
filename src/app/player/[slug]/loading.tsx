@@ -8,7 +8,7 @@ export default function Loading() {
           <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
         </div>
         <p className="text-xl text-gray-400 font-semibold">
-          Loading team data...
+          Loading player data...
         </p>
       </div>
     </div>

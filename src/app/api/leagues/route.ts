@@ -26,7 +26,11 @@ export async function GET(req: Request) {
 
       const response = await res.json();
 
-      const result = { status: 200, matches: response.matches };
+      const result = {
+        status: 200,
+        matches: response.matches,
+        competition: response.competition,
+      };
 
       return Response.json(result);
     } else {
