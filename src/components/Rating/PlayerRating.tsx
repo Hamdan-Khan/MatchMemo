@@ -3,7 +3,6 @@
 import { baseURL } from "@/lib/footballApi";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface PlayerRatingProps {
   playerId: string | number;
@@ -30,7 +29,7 @@ const PlayerRating = ({ playerId, teamId }: PlayerRatingProps) => {
         });
 
         if (response.status == 500) {
-          toast.error("Failed to fetch rating");
+          console.error("Failed to fetch rating");
         }
 
         const data = await response.json();
@@ -42,7 +41,6 @@ const PlayerRating = ({ playerId, teamId }: PlayerRatingProps) => {
         }
       } catch (error) {
         console.error("Error fetching rating:", error);
-        toast.error("Failed to fetch player rating");
       } finally {
         setIsLoading(false);
       }
@@ -66,15 +64,13 @@ const PlayerRating = ({ playerId, teamId }: PlayerRatingProps) => {
       });
 
       if (!response.ok) {
-        toast.error("Failed to add rating");
+        console.error("Failed to add rating");
       }
 
       setRating(newRating);
       setExistingRating(newRating);
-      toast.success("Rating submitted successfully");
     } catch (error) {
       console.error("Error adding rating:", error);
-      toast.error("Failed to submit rating");
     }
   };
 
