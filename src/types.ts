@@ -54,3 +54,30 @@ export type newsType = {
   url: string;
   urlToImage: string;
 };
+
+export type TeamStanding = {
+  position: number;
+  team: {
+    id: number;
+    name: string;
+    shortName: string;
+    tla: string;
+    crest: string;
+  };
+  playedGames: number;
+  form: string;
+  won: number;
+  draw: number;
+  lost: number;
+  points: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  goalDifference: number;
+};
+
+export type StandingsType = {
+  stage: string;
+  type: string;
+  group: string | null;
+  table: TeamStanding[];
+};
