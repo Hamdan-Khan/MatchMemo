@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import Image from "next/image";
 import { matchesType } from "@/types";
+import Link from "next/link";
 
 const Matches = ({ data }: { data: matchesType }) => {
   const getDate = new Date(data?.utcDate).toLocaleTimeString("en-US", {
@@ -10,17 +11,19 @@ const Matches = ({ data }: { data: matchesType }) => {
 
   return (
     <div className="grid grid-cols-3 gap-2">
-      <div className="w-full flex items-center">
-        <div className="w-[20px] h-[20px] relative mr-2 flex-shrink-0">
-          <Image
-            src={data?.homeTeam?.crest!}
-            alt={data?.homeTeam?.name!}
-            fill
-            className="object-cover"
-          />
+      <Link href={`/team/${data?.homeTeam?.id}`}>
+        <div className="w-full flex items-center">
+          <div className="w-[20px] h-[20px] relative mr-2 flex-shrink-0">
+            <Image
+              src={data?.homeTeam?.crest!}
+              alt={data?.homeTeam?.name!}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <p className="text-xs md:text-sm truncate">{data?.homeTeam?.name}</p>
         </div>
-        <p className="text-xs md:text-sm truncate">{data?.homeTeam?.name}</p>
-      </div>
+      </Link>
       <div className="px-2 m-auto flex justify-center items-center bg-slate-600 rounded-md">
         {data?.status == "FINISHED" ? (
           <p className="py-1 text-teal-400 text-xs">
@@ -30,19 +33,21 @@ const Matches = ({ data }: { data: matchesType }) => {
           <p className="py-1 text-teal-400 text-xs">{getDate}</p>
         )}
       </div>
-      <div className="w-full flex items-center justify-end">
-        <p className="text-xs md:text-sm truncate text-right">
-          {data.awayTeam?.name}
-        </p>
-        <div className="w-[20px] h-[20px] relative ml-2 flex-shrink-0">
-          <Image
-            src={data?.awayTeam?.crest!}
-            alt={data.awayTeam?.name!}
-            fill
-            className="object-cover"
-          />
+      <Link href={`/team/${data?.awayTeam?.id}`}>
+        <div className="w-full flex items-center justify-end">
+          <p className="text-xs md:text-sm truncate text-right">
+            {data.awayTeam?.name}
+          </p>
+          <div className="w-[20px] h-[20px] relative ml-2 flex-shrink-0">
+            <Image
+              src={data?.awayTeam?.crest!}
+              alt={data.awayTeam?.name!}
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
