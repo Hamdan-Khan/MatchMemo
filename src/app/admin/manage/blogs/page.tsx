@@ -34,7 +34,7 @@ export default async function Blogs() {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch blogs");
+    return <div>Failed to fetch blogs</div>;
   }
 
   const data: Blog[] = await res.json();
