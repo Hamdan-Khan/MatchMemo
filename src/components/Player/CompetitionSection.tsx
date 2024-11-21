@@ -8,7 +8,7 @@ export default function CompetitionsSection({
   competitions: Competition[];
 }) {
   return (
-    <div className="bg-secondary rounded-lg p-6">
+    <div className="bg-secondary rounded-lg p-6 mb-8">
       <h2 className="text-2xl font-semibold mb-4 text-white">
         Current Competitions
       </h2>

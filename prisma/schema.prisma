@@ -29,6 +29,7 @@ model PlayerRating {
   ratingId     Int      @id @default(autoincrement())
   playerId     Int
   playerRating Int
+  teamId       Int
 }
 
 model Match {
