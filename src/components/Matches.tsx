@@ -25,13 +25,17 @@ const Matches = ({ data }: { data: matchesType }) => {
         </div>
       </Link>
       <div className="px-2 m-auto flex justify-center items-center bg-slate-600 rounded-md">
-        {data?.status == "FINISHED" ? (
-          <p className="py-1 text-teal-400 text-xs">
-            {data?.score?.fullTime.home} : {data.score?.fullTime.away}
-          </p>
-        ) : (
-          <p className="py-1 text-teal-400 text-xs">{getDate}</p>
-        )}
+      {data?.status === "FINISHED" ? (
+        <p className="py-1 text-teal-400 text-xs">
+          {data?.score?.fullTime?.home} : {data?.score?.fullTime?.away}
+        </p>
+      ) : data?.status === "IN_PLAY" ? (
+        <p className="py-1 text-teak-400 text-xs">
+          {data?.score?.fullTime?.home} : {data?.score?.fullTime?.away}
+        </p>
+      ) : (
+        <p className="py-1 text-teal-400 text-xs">{getDate}</p>
+      )}
       </div>
       <Link href={`/team/${data?.awayTeam?.id}`}>
         <div className="w-full flex items-center justify-end">

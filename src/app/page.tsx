@@ -28,9 +28,10 @@ export default async function Home() {
   }
 
   const data = await res.json();
+  const liveMatches = data.matches.filter((match: any) => match.status === 'IN_PLAY');
   const { matches }: { matches: [] } = data;
 
-  const { earlierMatches, todayMatches, upcomingMatches } =
+  const { earlierMatches, todayMatches, upcomingMatches} =
     categorizeMatches(matches);
 
   return (
@@ -47,6 +48,7 @@ export default async function Home() {
           matchesListToday={todayMatches}
           matchesListTomorrow={upcomingMatches}
           matchesListYesterday={earlierMatches}
+          matchesListLive={liveMatches}
         />
       </section>
       <div className="w-full md:w-auto order-3">

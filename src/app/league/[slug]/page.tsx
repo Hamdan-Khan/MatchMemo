@@ -32,12 +32,12 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   return (
     <section className="flex-grow w-full md:max-w-[600px] p-4">
       <div className="flex justify-between items-center mb-4 border-b border-zinc-500 pb-2">
-        <h1 className="text-xl md:text-2xl font-bold">{competition.name}</h1>
+        <h1 className="text-xl md:text-2xl font-bold">{competition?.name}</h1>
 
         <div className="w-10 h-10 relative flex-shrink-0">
           <Image
-            src={competition.emblem}
-            alt={competition.name}
+            src={competition?.emblem}
+            alt={competition?.name}
             fill
             className="object-contain"
           />
