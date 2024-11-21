@@ -47,6 +47,14 @@ export default async function Blogs() {
       <div className="flex flex-col gap-4 bg-outer border border-zinc-700 p-6 rounded-lg max-w-[800px]">
         <h1 className="font-semibold text-3xl text-white">Manage Blogs</h1>
 
+        <Link href={`/admin/manage/blogs/publish`}>
+          <button
+            type="submit"
+            className="bg-green-600 px-5 font-semibold py-2 rounded-md max-w-max ml-auto"
+          >
+            Create Blog
+          </button>
+        </Link>
         <div className="flex flex-col gap-3">
           {blogs.map((blog) => (
             <div
