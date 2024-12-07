@@ -29,7 +29,7 @@ export default async function Home() {
   }
 
   const data = await res.json();
-  const { matches }: { matches: [] } = data;
+  const { matches }: { matches: matchesType[] } = data;
   const liveMatches = matches.filter(
     (match: matchesType) => match.status === "IN_PLAY"
   );

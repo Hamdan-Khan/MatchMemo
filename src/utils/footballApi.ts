@@ -11,7 +11,7 @@ export const filterLeague = async (
   return filteredLeagues;
 };
 
-export const categorizeMatches = (matches: matchesType) => {
+export const categorizeMatches = (matches: matchesType[]) => {
   // Check if matches is an array and not empty
   if (!Array.isArray(matches) || matches.length === 0) {
     console.error("Invalid or empty matches data");
