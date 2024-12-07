@@ -5,6 +5,7 @@ import { baseURL } from "@/lib/footballApi";
 import Link from "next/link";
 import { categorizeMatches } from "@/utils/footballApi";
 import { DateDisplay } from "@/components/DateDisplay";
+import { matchesType } from "@/types";
 
 export const revalidate = 10;
 
@@ -28,10 +29,12 @@ export default async function Home() {
   }
 
   const data = await res.json();
-  const liveMatches = data.matches.filter((match: any) => match.status === 'IN_PLAY');
   const { matches }: { matches: [] } = data;
+  const liveMatches = matches.filter(
+    (match: matchesType) => match.status === "IN_PLAY"
+  );
 
-  const { earlierMatches, todayMatches, upcomingMatches} =
+  const { earlierMatches, todayMatches, upcomingMatches } =
     categorizeMatches(matches);
 
   return (

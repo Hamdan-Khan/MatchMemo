@@ -1,5 +1,6 @@
 import Status from "@/components/Status";
 import { baseURL } from "@/lib/footballApi";
+import { matchesType } from "@/types";
 import { categorizeMatches } from "@/utils/footballApi";
 import Image from "next/image";
 
@@ -24,6 +25,9 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   }
 
   const { matches, competition } = data;
+  const liveMatches = matches.filter(
+    (match: matchesType) => match.status === "IN_PLAY"
+  );
   const { earlierMatches, todayMatches, upcomingMatches } =
     categorizeMatches(matches);
 
@@ -53,6 +57,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         matchesListToday={todayMatches}
         matchesListTomorrow={upcomingMatches}
         matchesListYesterday={earlierMatches}
+        matchesListLive={liveMatches}
       />
     </section>
   );
