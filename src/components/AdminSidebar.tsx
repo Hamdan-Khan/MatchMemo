@@ -17,7 +17,7 @@ const adminUtils = [
   },
 ];
 
-export const AdminSidebar: React.FC = async () => {
+export const AdminSidebar: React.FC = () => {
   const pathname = usePathname();
   return (
     <section className="px-2 border border-zinc-700 md:px-4 py-4 bg-outer rounded-md min-w-[300px] max-h-max">
