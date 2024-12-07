@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { matchesType } from "@/types";
 
-export const filterLeague = async (filterData: string, allMatches: any) => {
+export const filterLeague = async (
+  filterData: string,
+  allMatches: { matches: matchesType[] }
+) => {
   const matches: matchesType[] = allMatches?.matches || [];
   const filteredLeagues = matches.filter(
     (item) => item.competition.name === filterData
@@ -9,11 +11,10 @@ export const filterLeague = async (filterData: string, allMatches: any) => {
   return filteredLeagues;
 };
 
-export const categorizeMatches = (matches: any) => {
-
+export const categorizeMatches = (matches: matchesType) => {
   // Check if matches is an array and not empty
   if (!Array.isArray(matches) || matches.length === 0) {
-    console.error('Invalid or empty matches data');
+    console.error("Invalid or empty matches data");
     return {
       todayMatches: [],
       earlierMatches: [],
@@ -26,11 +27,11 @@ export const categorizeMatches = (matches: any) => {
   const sevenDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
   const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-  const todayMatches: any[] = [];
-  const earlierMatches: any[] = [];
-  const upcomingMatches: any[] = [];
+  const todayMatches: matchesType[] = [];
+  const earlierMatches: matchesType[] = [];
+  const upcomingMatches: matchesType[] = [];
 
-  matches.forEach((match: any) => {
+  matches.forEach((match: matchesType) => {
     if (match && match.utcDate) {
       const matchDate = new Date(match.utcDate);
 
@@ -45,7 +46,6 @@ export const categorizeMatches = (matches: any) => {
       }
     }
   });
-
 
   return {
     todayMatches,

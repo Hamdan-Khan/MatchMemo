@@ -3,7 +3,7 @@ import { apiOptions } from "@/types";
 export const options: apiOptions = {
   next: { revalidate: 30 },
   headers: {
-    "X-Auth-Token": process.env.API_TOKEN,
+    "X-Auth-Token": process.env.API_TOKEN || "",
     "Content-Type": "application/json",
   },
 };

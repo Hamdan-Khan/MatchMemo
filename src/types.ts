@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type apiOptions = {
-  next: any;
+  next: { revalidate: number };
   headers: {
-    "X-Auth-Token": string | any;
-    "Content-Type": string | any;
+    "X-Auth-Token": string;
+    "Content-Type": string;
   };
 };
 
