@@ -76,7 +76,7 @@ const Status = ({
               matchesListLive?.length > 0 ? "bg-red-500" : "bg-gray-600"
             }`} 
           ></span>
-          LIVE {(matchesListLive?.length || 0)}
+          LIVE ({(matchesListLive?.length || 0)})
         </button>
         <button
           onClick={() => {

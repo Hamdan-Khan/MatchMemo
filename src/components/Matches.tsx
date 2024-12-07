@@ -9,6 +9,19 @@ const Matches = ({ data }: { data: matchesType }) => {
     minute: "2-digit",
   });
 
+  const matchStatus = 
+  data?.status === "SCHEDULED" ? "Scheduled" :
+  data?.status === "TIMED" ? "Planned" :
+  data?.status === "IN_PLAY" ? "Live" :
+  data?.status === "PAUSED" ? "Paused" :
+  data?.status === "FINISHED" ? "Finished" :
+  data?.status === "AWARDED" ? "Awarded" :
+  data?.status === "CANCELLED" ? "Cancelled" :
+  data?.status === "POSTPONED" ? "Postponed" :
+  data?.status === "SUSPENDED" ? "Suspended" :
+  "Unknown";
+
+
   return (
     <div className="grid grid-cols-3 gap-2">
       <Link href={`/team/${data?.homeTeam?.id}`}>
@@ -30,8 +43,8 @@ const Matches = ({ data }: { data: matchesType }) => {
           {data?.score?.fullTime?.home} : {data?.score?.fullTime?.away}
         </p>
       ) : data?.status === "IN_PLAY" ? (
-        <p className="py-1 text-teak-400 text-xs">
-          {data?.score?.fullTime?.home} : {data?.score?.fullTime?.away}
+        <p className="py-1 text-teal-400 text-xs">
+         <span className="py-1 text-green-500 text-xs font-bold">{matchStatus}</span> {data?.score?.fullTime?.home} : {data?.score?.fullTime?.away}
         </p>
       ) : (
         <p className="py-1 text-teal-400 text-xs">{getDate}</p>
